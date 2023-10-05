@@ -373,13 +373,20 @@ to be kept in mind when problems arise.</em></p>
 <h2>A. Setting up export in EyeSuite</h2>
 <p>First, you need to create an <em>export button</em> in EyeSuite.</p>
 <div id="identiy-the-path-to-the-export-template-in-the-visualfields-package" class="section level3">
-<h3>Identiy the path to the export template in the visualFields
+<h3>Identify the path to the export template in the visualFields
 package</h3>
 <p>For this, you need to find the path to the export template that is
-included in the visualFields package. In R, enter the following command
+included in the visualFields package. <em>Currently, the export template
+is not included in the CRAN version of visualFields, yet. Please install
+the package as follows.</em> In R, enter the following command
 (visualFields package needs to be installed):</p>
-<pre class="r"><code>print(system.file(&quot;octopus_template.txt&quot;, package=&quot;visualFields&quot;))</code></pre>
-<pre><code>## [1] &quot;&quot;</code></pre>
+<pre class="r"><code># Until the version on CRAN is updated, download the visualField package as follows.
+library(devtools)</code></pre>
+<pre class="r"><code>install_github(&quot;imarinfr/vf1/source&quot;)</code></pre>
+<pre class="r"><code>library(visualFields)
+
+# Get the file
+print(system.file(&quot;octopus_template.txt&quot;, package=&quot;visualFields&quot;))</code></pre>
 </div>
 <div id="create-the-export-button-in-eyesuite" class="section level3">
 <h3>Create the export button in Eyesuite</h3>
@@ -431,23 +438,10 @@ the “Trend analysis” view, all fields will be exported.</p>
 </div>
 <div id="b.-working-with-the-loadoctopus-function" class="section level2">
 <h2>B. Working with the loadoctopus function</h2>
-<p>For this tutorial, example data has been provided in the vfocto
-package. From now on, I will use these example fields.</p>
-<pre class="r"><code>#library(devtools)
-# install_github(...)
-
-# dev_mode(on = TRUE)
-library(visualFields)
-library(vfocto)
-
-
-# get path to example file from the vfocto package
-
-fpath &lt;- system.file(&quot;extdata/EyesuiteTestfile.csv&quot;, package=&quot;vfocto&quot;)
-
-# load file
-
-octopus_list &lt;- loadoctopus(fpath)
+<p>For this tutorial, example data can be downloaded <a href="https://huchzi.github.io/vf1/EyesuiteTestfile.csv">here</a>. From
+now on, I will use these example fields.</p>
+<pre class="r"><code># load file: please download the file as stated above and modify the path if necessary
+octopus_list &lt;- loadoctopus(&quot;../extdata/EyesuiteTestfile.csv&quot;)
 
 str(octopus_list)</code></pre>
 <pre><code>## List of 11
@@ -525,9 +519,9 @@ str(octopus_list)</code></pre>
 ##   ..$ fnr : num [1:4] 0 0.125 0.091 0
 ##   ..$ fl  : int [1:4] 0 0 0 2
 ##   ..$ vfID: int [1:4] 1 1 2 3
-##  $ create_locmap    :function (vf_id)  
-##  $ get_sensitivities:function (vf_id)  
-##  $ get_defects      :function (vf_id)  
+##  $ create_locmap    :function (vf_id)
+##  $ get_sensitivities:function (vf_id)
+##  $ get_defects      :function (vf_id)
 ##  $ get_norm_values  :function (vf_id)</code></pre>
 <div id="patients" class="section level3">
 <h3>Patients</h3>
@@ -638,10 +632,10 @@ m_locmap &lt;- octopus_list$create_locmap(2)
 print(m_locmap)</code></pre>
 <pre><code>## $name
 ## [1] &quot;LVP 76&quot;
-## 
+##
 ## $desc
 ## [1] &quot;This locmap was automatically created from the csv exported by Eyesuite.&quot;
-## 
+##
 ## $coord
 ##        x     y
 ## 1    0.0  60.0
